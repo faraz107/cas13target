@@ -6,14 +6,11 @@ library(fontawesome)
 library(tidyverse)
 library(shinycssloaders)
 library(shinyBS)
-# library(bslib)
-# library(plotly)
-
 library(here)
 library(Biostrings)
 library(DT)
 
-# INSERT Dataset HERE
+# INSERT functions HERE
 source(here("findScore.R"))
 source(here("compareHumanRNA.R"))
 
@@ -106,9 +103,7 @@ ui <- fluidPage(
     tags$p("If you are using this Cas13 guide RNA design tool in your research, please cite:"),
     tags$em("'Design principles of PspCas13b for potent and off-target-free RNA silencing' by Hu et al., 2023 (under review)."),
   ),
-  # tags$a(href = "https://www.petermac.org", 
-  #        "'Design principles of PspCas13b for potent and off-target-free RNA silencing' by Hu et al., 2023 (under review)."),
-  
+ 
   tags$hr(),
   
   tags$div(class = "footer", checked = NA, style = "text-align: center",
@@ -135,17 +130,6 @@ server <- function(input, output, session) {
   v$goodSeq <- "GGNNNNNNNNNNNNDDDNNNNNNNNNNNNN"
   v$badSeq <- "CCCCNNNNNNCCNNCCCHNNNNNNNNNNNN"
   
-  # # Event reactive - Submit button
-  # reinSeq <- eventReactive(
-  #   input$butSubmit,{
-  #     input$inSeq %>% toupper() %>% str_replace_all(pattern = "U", replacement = "T")
-  #     })
-  # 
-  # # Event reactive - Show Example button
-  # reexampleSeq <- eventReactive(
-  #   input$butExample,{
-  #     "ATTAAAGGTTTATACCTTCCCAGGTAACAAACC" %>% toupper() %>% str_replace_all(pattern = "U", replacement = "T")
-  #   })
   
   # Observe Event - Submit button
   observeEvent(
@@ -172,27 +156,7 @@ server <- function(input, output, session) {
     })
   
   
-  # redf <- eventReactive(
-  #   eventExpr = input$butSubmit,
-  #   valueExpr = {
-  
-  # df_seqs = data.frame(Seqs = vector(mode = "character"))
-  # 
-  # seqs <- input$inSeq %>% toupper() %>% DNAString() %>% reverseComplement()
-  # 
-  # for (i in seq.int(1, str_length(seqs)-29, 1)){
-  #   df_seqs <- add_row(df_seqs,
-  #                      Seqs = seqs %>% as.character() %>% str_sub(start = i, end = i+29))
-  # }
-  # 
-  # df_seqs <- df_seqs %>%
-  #   rowwise() %>%
-  #   mutate(Score = findScore(Seq = Seqs))
-  
-  #   df_seqs
-  #   
-  # })
-  
+   
   # Output DT
   output$dataTable <- DT::renderDataTable({
     
@@ -289,45 +253,3 @@ server <- function(input, output, session) {
 shinyApp(ui = ui, server = server)
 
 
-#### backup ####
-
-# Installing Docker
-# https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
-
-# Dockerizing Shiny app
-# https://www.jumpingrivers.com/blog/shiny-auto-docker/
-
-# sudo docker build -t faraz107/cas13target .
-# sudo docker tag faraz107/cas13target faraz107/cas13target:beta
-# sudo docker push faraz107/cas13target:beta
-
-# renv::snapshot()
-
-# WORKING!!!
-# system (paste0("echo ", "'", seq, "'", "| ", blastn_cmd, " -db ", db_path, " -task blastn -outfmt \"7 delim=, staxid sacc gaps mismatch nident length qcovs qcovhsp qcovus\"", " -word_size 15 ", " -reward 4 ", " -penalty -5 ", " -gapopen 12 ", " -gapextend 8 ", " -max_target_seqs 10 "), intern = TRUE)
-
-# system2(command = here("ncbi-blast-2.14.1+", "bin", "blastn"), args = c("-db", here("ncbi-blast-2.14.1+", "bin", "rnadb"), "-task", "blastn", "-outfmt", "\"7 delim=, staxid sacc gaps mismatch nident length qcovs qcovhsp qcovus\"", "-word_size", "15", "-reward", "4", "-penalty", "-5 ", "-gapopen", "12", "-gapextend", "8", "-max_target_seqs", "10"), input = Seq, stdout = TRUE)
-
-
-
-
-# system("export C='GGCACTGCCTGCCCAGTGACAATCGTTAAAC'\necho $C")
-
-# system("C='>seq\nGGCACTGCCTGCCCAGTGACAATCGTTAAAC' \n echo \"$C\" ")
-
-# system("export C='GGCACTGCCTGCCCAGTGA' \n /home/unimelb.edu.au/syedfaraza/R/Cas13crRNAapp/ncbi-blast-2.14.1+/bin/blastn -db /home/unimelb.edu.au/syedfaraza/R/RProjects/cov-crispr/Cas13crRNAapp/ncbi-blast-2.14.1+/bin/rnadb -task blastn -query \"paste <(echo $C)\" ")
-
-### Runs on command line
-
-# export C='GGCACTGCCTGCCCAGTGA'; blastn -db /home/unimelb.edu.au/syedfaraza/R/RProjects/cov-crispr/Cas13crRNAapp/ncbi-blast-2.14.1+/bin/rnadb -task blastn -query <(echo -e $C) -outfmt 7 -max_target_seqs 10
-
-#### Example inputs ####
-
-# CAGCTCAGGGCTAACGTAGCAGTATCTACAAGAAATATTCCCATATGGCCCCTGAACTTTTCACAGGGAACTAACGTAGCAGTGCGCCCAAGAAATATT
-
-# CCATATGGCCCCTGAACTTTTCACAGGGAACTAACGTAGCAGTATCTACAAGAAATATTC
-
-# CAGCTCAGGGGCCATATGGATTGGTGTCCC
-# CTAACGTAGCAGTATCTACAAGAAATATTC
-# CCATATGGCCCCTGAACTTTTCACAGGGAA
-# CTAACGTAGCAGTGCGCCCAAGAAATATTC
