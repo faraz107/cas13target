@@ -50,30 +50,7 @@ findScore <- function(crSeq, goodSeq, badSeq) {
       }
     }
   }
-  
-  # # Step 1 to check for "GG" at the 3' end
-  # if (Seq[1] == "G") {
-  #   score = score + 60
-  # }
-  # if (Seq[2] == "G") {
-  #   score = score + 60
-  # }
-  # 
-  # # Step 2 to check for NOT "CCCC" at the 3' end
-  # if (Seq[1] == "C") {
-  #   score = score - 40
-  # }
-  # if (Seq[2] == "C") {
-  #   score = score - 40
-  # }
-  # if (Seq[3] == "C") {
-  #   score = score - 40
-  # }
-  # if (Seq[4] == "C") {
-  #   score = score - 40
-  # }
-  
-  
+    
   # Step 2 to check for NOT "C" at the positions: 11, 12, 15, 16, 17
   score = ifelse (Seq[11] == "C",  score - 5, score + 5)
   score = ifelse (Seq[12] == "C",  score - 5, score + 5)
