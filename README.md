@@ -16,7 +16,7 @@ E.g., the following lines set path to "ncbi-blast-2.14.1+".
 
 ## Citation
 
-If you are using this Cas13 guide RNA design tool in your research, please cite: ["Design principles of PspCas13b for potent and off-target-free RNA silencing" by Hu et al., 2023](https://www.biorxiv.org/content/10.1101/2022.06.22.497105v1).
+If you are using this Cas13 guide RNA design tool in your research, please cite: ["Single-base tiled screen unveils design principles of PspCas13b for potent and off-target-free RNA silencing" by Hu et al., Nature Structural & Molecular Biology (2024](https://www.nature.com/articles/s41594-024-01336-0).
 
 ## License
 
